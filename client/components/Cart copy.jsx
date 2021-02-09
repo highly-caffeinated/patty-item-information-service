@@ -58,53 +58,16 @@ class App extends React.Component {
 
   getData(zip) {
     const randNum = Math.round(Math.random() * 10000000).toString(16);
+    console.log(randNum);
     axios.get(`/api/item/${randNum}`)
-      .then((data) => {
-        let { seller, rating, sales, employee, employee_position, employee_ava, policy_updated, policy_acceptReturn, policy_allowExchange, policy_types, item, item_tags, price, item_availability, item_description, selector, shipping_origin } = data.data[0];
-        rating = {
-          name: seller,
-          sales: sales,
-          stars: rating
-        };
-        let info = {
-          tags: item_tags,
-          price: price,
-          availability: item_availability
-        };
-        let selectorFormat = () => {
-          let arr = [];
-          for (var keys in selector) {
-            let obj = {
-              "options": selector[keys],
-              "name": keys,
-            }
-            arr.push(obj);
-          }
-          return arr;
-        };
-        let selectors = selectorFormat();
-        let extDetails = {
-          description: item_description,
-        };
-        let shipping = {
-          origin: {
-            latitude: shipping_origin[0].toString(),
-            longitude: shipping_origin[1].toString(),
-          },
-          exchanges: policy_allowExchange,
-        };
-        let shopPolicy = {
-          lastUpdated: policy_updated,
-          returns: policy_acceptReturn,
-          noReturnTypes: policy_types,
-        };
-        seller = {
-          name: employee,
-          role: employee_position,
-          imageURL: employee_ava,
-        };
-        const lat0 = shipping.origin.latitude;
-        const long0 = shipping.origin.longitude;
+      // axios.get('/api/item/0')
+      .then((item) => {
+        const {
+          rating, info, selectors, shipping, extDetails, shopPolicy, seller,
+        } = item.data;
+        const { latitude, longitude } = shipping.origin;
+        const lat0 = latitude;
+        const long0 = longitude;
         axios.get(`http://dev.virtualearth.net/REST/v1/Locations?countryRegion=US&postalCode=${zip}&key=${BING_KEY}`)
           .then((zipData) => {
             const resources = zipData.data.resourceSets[0].resources[0];

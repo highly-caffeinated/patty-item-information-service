@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS items;
 CREATE TABLE items
+
 (
   _id VARCHAR(6) PRIMARY KEY,
   seller VARCHAR(50),
@@ -20,3 +21,7 @@ CREATE TABLE items
   selector JSON,
   shipping_origin DOUBLE PRECISION[]
 );
+
+DROP USER IF EXISTS student;
+CREATE USER student WITH PASSWORD 'student';
+GRANT SELECT, UPDATE, INSERT ON TABLE items TO student;
