@@ -1,7 +1,7 @@
 require('newrelic');
 const express = require('express');
 // const compression = require('compression');
-const Cart = require('../database/Cart');
+// const Cart = require('../database/Cart');
 
 const pgp = require('pg-promise')(/* options */)
 const db = pgp('postgres://student:student@54.186.112.152:5432/postgres')
