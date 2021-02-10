@@ -4,7 +4,7 @@ const express = require('express');
 // const Cart = require('../database/Cart');
 
 const pgp = require('pg-promise')(/* options */)
-const db = pgp('postgres://student:student@54.186.112.152:5432/postgres')
+const db = pgp('postgres://student:student@172.31.30.89:5432/postgres')
 
 const app = express();
 const port = 3003;
