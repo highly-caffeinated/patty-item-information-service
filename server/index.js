@@ -1,6 +1,10 @@
+require('newrelic');
 const express = require('express');
 // const compression = require('compression');
-const Cart = require('../database/Cart');
+// const Cart = require('../database/Cart');
+
+const pgp = require('pg-promise')(/* options */)
+const db = pgp('postgres://student:student@172.31.30.89:5432/postgres');
 
 const app = express();
 const port = 3003;
@@ -9,9 +13,9 @@ const port = 3003;
 app.use(express.static('public'));
 
 app.get('/api/item/:itemID', (req, res) => {
-  Cart.CartModel.findById(req.params.itemID)
-    .then((result) => res.send(result))
-    .catch((err) => res.send(err));
+  db.query(`SELECT * FROM items WHERE _id = '${req.params.itemID}';`)
+  .then((result) => res.send(result))
+  .catch((err) => res.send(err));  
 });
 
 app.listen(port, () => {
